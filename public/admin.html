@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SafeNet Blacklist - Admin</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Admin panel</h1>
+
+    <section id="loginSection">
+      <p>Log in met admin-code</p>
+      <form id="loginForm">
+        <input name="code" type="password" placeholder="Admin code" required />
+        <button type="submit">Login</button>
+      </form>
+      <div id="loginMsg"></div>
+    </section>
+
+    <section id="panel" class="hidden">
+      <button id="logoutBtn">Logout</button>
+      <h2>Rapporten</h2>
+      <div id="reports"></div>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
