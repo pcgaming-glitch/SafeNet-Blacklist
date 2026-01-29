@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SafeNet Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" id="loginContainer">
+    <h1>Admin Login</h1>
+    <p>Enter the admin code.</p>
 
+    <label>Admin Code:</label>
+    <input type="password" id="adminCode">
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <div class="container" id="adminContainer" style="display:none;">
+    <h1>Admin Panel</h1>
+    <button id="logoutBtn">Logout</button>
+
+    <h2>Reports</h2>
+    <div id="reportsList"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
