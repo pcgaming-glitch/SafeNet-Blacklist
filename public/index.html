@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SafeNet Blacklist - Melding</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>SafeNet Blacklist - Meld een gebruiker</h1>
+    <form id="reportForm">
+      <label>👨‍💼 Person:
+        <input name="person" type="text" required />
+      </label>
+      <label>🪪 User ID:
+        <input name="userId" type="text" required />
+      </label>
+      <label>⚠️ Reason:
+        <textarea name="reason" required></textarea>
+      </label>
+      <label>✍️ Proof (foto):
+        <input name="proof" type="file" accept="image/*" capture="environment" required />
+      </label>
+      <button type="submit">Verstuur melding</button>
+    </form>
+
+    <div id="message" class="hidden"></div>
+    <p class="small">Admin? <a href="/admin.html">Open admin panel</a></p>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
