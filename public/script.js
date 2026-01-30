@@ -54,13 +54,53 @@ document.addEventListener('DOMContentLoaded', () => {
   if(langSelect) langSelect.value = getLang();
   applyLang();
 
-  // settings modal
-  const settingsBtn = $('settingsBtn') || $('settingsBtnFooter');
-  const settingsModal = $('settingsModal');
-  const closeSettings = $('closeSettings');
-  $('settingsBtn')?.addEventListener('click', ()=> settingsModal.classList.remove('hidden'));
-  $('settingsBtnFooter')?.addEventListener('click', ()=> settingsModal.classList.remove('hidden'));
-  closeSettings?.addEventListener('click', ()=> settingsModal.classList.add('hidden'));
+  // ********** Robust settings modal handlers **********
+  // bind all open-settings buttons (header/footer/admin)
+  const settingsButtons = document.querySelectorAll('#settingsBtn, #settingsBtnFooter, #settingsBtnAdmin');
+  // support multiple modals if present (index + admin), select them all
+  const settingsModals = document.querySelectorAll('#settingsModal');
+  // bind all close buttons (if duplicate IDs exist, querySelectorAll will still find them)
+  const closeButtons = document.querySelectorAll('#closeSettings');
+
+  // function to open all modals (keeps behaviour consistent)
+  function openSettings() {
+    settingsModals.forEach(modal => modal.classList.remove('hidden'));
+  }
+  // function to close all modals
+  function closeSettings() {
+    settingsModals.forEach(modal => modal.classList.add('hidden'));
+  }
+
+  settingsButtons.forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSettings();
+    });
+  });
+
+  closeButtons.forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSettings();
+    });
+  });
+
+  // close when clicking on overlay (outside modal-content)
+  settingsModals.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeSettings();
+    });
+    // prevent clicks inside modal-content from bubbling to overlay
+    const content = modal.querySelector('.modal-content');
+    if (content) {
+      content.addEventListener('click', (e) => e.stopPropagation());
+    }
+  });
+  // ********** end settings modal handlers **********
+
+  // settings button actions (also for non-open buttons)
   $('lightModeBtn')?.addEventListener('click', ()=> setTheme('light'));
   $('darkModeBtn')?.addEventListener('click', ()=> setTheme('dark'));
   $('langSelect')?.addEventListener('change', (e)=> setLang(e.target.value));
@@ -69,37 +109,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const idToggleBtn = $('idToggleBtn');
   const inputPerson = $('inputPerson');
   const inputUserId = $('inputUserId');
-  const identifiedFields = () => {
-    // identified fields are always visible but required only in identified mode
-    const mode = idToggleBtn.dataset.mode || 'anonymous';
-    if(mode === 'identified'){
-      inputPerson.setAttribute('required','required');
-      inputUserId.setAttribute('required','required');
-    } else {
-      inputPerson.removeAttribute('required');
-      inputUserId.removeAttribute('required');
-      // clear values to avoid accidental sending
-      inputPerson.value = '';
-      inputUserId.value = '';
-    }
-  };
   // default anonymous
-  idToggleBtn.dataset.mode = 'anonymous';
-  idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
-  idToggleBtn.addEventListener('click', ()=>{
-    const current = idToggleBtn.dataset.mode === 'identified' ? 'identified' : 'anonymous';
-    if(current === 'anonymous'){
-      idToggleBtn.dataset.mode = 'identified';
-      idToggleBtn.textContent = translations[getLang()]?.identified || 'identified';
-      inputPerson.setAttribute('required','required');
-      inputUserId.setAttribute('required','required');
-    } else {
-      idToggleBtn.dataset.mode = 'anonymous';
-      idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
-      inputPerson.removeAttribute('required');
-      inputUserId.removeAttribute('required');
-    }
-  });
+  if (idToggleBtn) {
+    idToggleBtn.dataset.mode = 'anonymous';
+    idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
+    idToggleBtn.addEventListener('click', ()=>{
+      const current = idToggleBtn.dataset.mode === 'identified' ? 'identified' : 'anonymous';
+      if(current === 'anonymous'){
+        idToggleBtn.dataset.mode = 'identified';
+        idToggleBtn.textContent = translations[getLang()]?.identified || 'identified';
+        inputPerson?.setAttribute('required','required');
+        inputUserId?.setAttribute('required','required');
+      } else {
+        idToggleBtn.dataset.mode = 'anonymous';
+        idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
+        inputPerson?.removeAttribute('required');
+        inputUserId?.removeAttribute('required');
+        // clear values to avoid accidental sending
+        if (inputPerson) inputPerson.value = '';
+        if (inputUserId) inputUserId.value = '';
+      }
+    });
+  }
 
   // form submit
   const reportForm = $('reportForm');
@@ -108,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     msg.classList.add('hidden');
     const fd = new FormData();
-    const mode = idToggleBtn.dataset.mode || 'anonymous';
+    const mode = idToggleBtn?.dataset.mode || 'anonymous';
     const reason = $('inputReason').value.trim();
     if(!reason){
       msg.textContent = translations[getLang()]?.fillError || 'Vul alle velden in.';
@@ -146,8 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
         msg.textContent = translations[getLang()]?.thankYou || 'Bedankt — je melding is ontvangen.';
         msg.classList.remove('hidden');
         reportForm.reset();
-        idToggleBtn.dataset.mode = 'anonymous';
-        idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
+        if (idToggleBtn) {
+          idToggleBtn.dataset.mode = 'anonymous';
+          idToggleBtn.textContent = translations[getLang()]?.anonymous || 'anonymous';
+        }
       } else {
         msg.textContent = data.message || 'Fout bij verzenden.';
         msg.classList.remove('hidden');
