@@ -22,7 +22,7 @@
         <div class="id-toggle" title="Anonymous / Identified">
           <button id="idToggleBtn" class="toggle-pill" aria-pressed="false">anonymous</button>
         </div>
-        <button id="settingsBtn" class="icon-btn" aria-label="Instellingen">⚙️</button>
+        <!-- Settings verwijderd zodat modal niet meer verschijnt -->
       </div>
     </div>
   </header>
@@ -33,7 +33,6 @@
     </section>
 
     <form id="reportForm" class="card form-card" autocomplete="off">
-      <!-- Exact gevraagde velden -->
       <label class="field-label">👨‍💼 Person:
         <input id="inputPerson" name="person" type="text" placeholder="Naam of gebruikersnaam" />
       </label>
@@ -47,7 +46,6 @@
       </label>
 
       <label class="field-label">✍️ Proof:
-        <!-- accept image/* zonder capture zodat galerij keuzescherm voorgesteld wordt -->
         <input id="inputProof" name="proof" type="file" accept="image/*" required />
         <small class="hint">Kies een foto uit je galerij (JPG/PNG). Geen camerafoto verplicht.</small>
       </label>
@@ -65,7 +63,6 @@
     <div class="footer-inner">
       <div class="socials">
         <strong>Socials</strong>
-        <button id="settingsBtnFooter" class="tiny-btn" title="Instellingen">⚙️</button>
       </div>
 
       <div class="discord">
@@ -74,36 +71,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Settings modal -->
-  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-    <div class="modal-content">
-      <h3 id="settingsTitle">Instellingen</h3>
-
-      <div class="setting-row">
-        <label>Theme</label>
-        <div class="theme-controls">
-          <button id="lightModeBtn" class="small-btn">Light</button>
-          <button id="darkModeBtn" class="small-btn">Dark</button>
-        </div>
-      </div>
-
-      <div class="setting-row">
-        <label for="langSelect">Taal</label>
-        <select id="langSelect">
-          <option value="nl">Nederlands</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
-
-      <div class="modal-actions">
-        <button id="closeSettings" class="small-btn">Sluiten</button>
-      </div>
-    </div>
-  </div>
 
   <script src="/script.js"></script>
 </body>
