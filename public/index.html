@@ -3,92 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SafeNet Blacklist - Melding</title>
+  <title>SafeNet Blacklist - Meld een gebruiker</title>
   <link rel="stylesheet" href="/style.css" />
+  <meta name="theme-color" content="#F7EDE2" />
 </head>
 <body>
   <header class="site-header">
-    <div class="header-row">
-      <div class="socials">
-        <strong>Socials</strong>
-        <!-- settings knop staat onder het kopje socials volgens jouw wens -->
-        <button id="settingsBtn" class="icon-btn" title="Instellingen">⚙️</button>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">🛡️</div>
+        <div class="brand-text">
+          <h1>SafeNet Blacklist</h1>
+          <p class="tagline">Meld zorgwekkend gedrag — veilig & eenvoudig</p>
+        </div>
       </div>
 
-      <div class="top-controls">
-        <!-- Anonymous / Identified toggle boven alle vragen -->
-        <div class="id-toggle" aria-hidden="false">
-          <label class="switch-label">anonymous</label>
-          <button id="idToggleBtn" class="toggle-pill">anonymous</button>
+      <div class="controls">
+        <div class="id-toggle" title="Anonymous / Identified">
+          <button id="idToggleBtn" class="toggle-pill" aria-pressed="false">anonymous</button>
         </div>
+        <button id="settingsBtn" class="icon-btn" aria-label="Instellingen">⚙️</button>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <h1 id="pageTitle">SafeNet Blacklist - Meld een gebruiker</h1>
+    <section class="intro card">
+      <p>Vul hieronder de vragen in. Als je anoniem wilt blijven: kies <strong>anonymous</strong> bovenaan. Als je jezelf wilt identificeren, kies <strong>identified</strong> — dan verschijnt de velden voor Your User en Your UserID.</p>
+    </section>
 
-    <form id="reportForm" class="card">
-      <!-- Identified fields are hidden unless chosen -->
-      <div id="identifiedFields" class="hidden">
-        <label id="labelPerson">👨‍💼 Your User:
-          <input id="inputPerson" name="person" type="text" />
-        </label>
-        <label id="labelUserId">🪪 Your UserID:
-          <input id="inputUserId" name="userId" type="text" />
-        </label>
-      </div>
-
-      <label>⚠️ Reason:
-        <textarea id="inputReason" name="reason" required></textarea>
+    <form id="reportForm" class="card form-card" autocomplete="off">
+      <!-- Exact gevraagde velden -->
+      <label class="field-label">👨‍💼 Person:
+        <input id="inputPerson" name="person" type="text" placeholder="Naam of gebruikersnaam" />
       </label>
 
-      <label>✍️ Proof (foto):
-        <!-- NB: removed capture attribute so mobile will open gallery chooser (not directly camera).
-             accept="image/*" keeps images only. -->
+      <label class="field-label">🪪 User ID:
+        <input id="inputUserId" name="userId" type="text" placeholder="Bijv. 1234567890" />
+      </label>
+
+      <label class="field-label">⚠️ Reason:
+        <textarea id="inputReason" name="reason" placeholder="Beschrijf kort waarom je deze melding maakt" required></textarea>
+      </label>
+
+      <label class="field-label">✍️ Proof:
+        <!-- accept image/* zonder capture zodat galerij keuzescherm voorgesteld wordt -->
         <input id="inputProof" name="proof" type="file" accept="image/*" required />
+        <small class="hint">Kies een foto uit je galerij (JPG/PNG). Geen camerafoto verplicht.</small>
       </label>
 
       <div class="form-actions">
-        <button type="submit" id="submitBtn">Verstuur melding</button>
+        <button type="submit" id="submitBtn" class="primary">Verstuur melding</button>
       </div>
+      <div id="message" class="form-message hidden" role="status" aria-live="polite"></div>
     </form>
 
-    <div id="message" class="hidden" role="status"></div>
-
-    <p class="small">
-      Admin? <a href="/admin.html">Open admin panel</a>
-    </p>
+    <p class="small">Admin? <a href="/admin.html">Open admin panel</a></p>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-row">
-      <div class="footer-left">
-        <strong>Discord</strong>
-        <!-- link "verborgen" onder Discord tekst — hier zichtbaar in DOM maar je noemde 'verstopt',
-             zodat het niet direct prominent is, het is in de tekst en styled discreet -->
-        <div class="discord-link">Join: <a id="discordHidden" href="https://discord.gg/ES9rB23XAr" target="_blank" rel="noreferrer">https://discord.gg/ES9rB23XAr</a></div>
+    <div class="footer-inner">
+      <div class="socials">
+        <strong>Socials</strong>
+        <button id="settingsBtnFooter" class="tiny-btn" title="Instellingen">⚙️</button>
       </div>
-      <div class="footer-right">
-        <small id="footerNote">© SafeNet Blacklist</small>
+
+      <div class="discord">
+        <strong>Discord</strong>
+        <div class="discord-link subtle">Join: <a id="discordHidden" href="https://discord.gg/ES9rB23XAr" target="_blank" rel="noreferrer">discord.gg/ES9rB23XAr</a></div>
       </div>
     </div>
   </footer>
 
-  <!-- Settings modal (hidden by default) -->
+  <!-- Settings modal -->
   <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
     <div class="modal-content">
       <h3 id="settingsTitle">Instellingen</h3>
 
-      <section class="setting-row">
+      <div class="setting-row">
         <label>Theme</label>
         <div class="theme-controls">
           <button id="lightModeBtn" class="small-btn">Light</button>
           <button id="darkModeBtn" class="small-btn">Dark</button>
         </div>
-      </section>
+      </div>
 
-      <section class="setting-row">
+      <div class="setting-row">
         <label for="langSelect">Taal</label>
         <select id="langSelect">
           <option value="nl">Nederlands</option>
@@ -97,7 +97,7 @@
           <option value="fr">Français</option>
           <option value="de">Deutsch</option>
         </select>
-      </section>
+      </div>
 
       <div class="modal-actions">
         <button id="closeSettings" class="small-btn">Sluiten</button>
