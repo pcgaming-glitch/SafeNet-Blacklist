@@ -3,11 +3,22 @@
   --card: #ffffff;
   --accent: #2b6cb0;
   --muted: #666;
+  --text: #222;
 }
+
+/* dark theme variables */
+body.dark {
+  --bg: #0f1720;
+  --card: #0b1220;
+  --accent: #60a5fa;
+  --muted: #9aa4b2;
+  --text: #e6eef8;
+}
+
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   background: var(--bg);
-  color: #222;
+  color: var(--text);
   margin: 0;
   padding: 20px;
 }
@@ -19,16 +30,54 @@ body {
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(20,20,40,0.06);
 }
-h1 { margin-top: 0; }
-label { display: block; margin: 12px 0; }
-input[type="text"], input[type="password"], textarea {
+.site-header .header-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.socials { display:flex; align-items:center; gap:8px; }
+.icon-btn { background:transparent; border:none; cursor:pointer; font-size:18px; }
+.top-controls { display:flex; align-items:center; gap:8px; }
+
+/* id toggle */
+.id-toggle { display:flex; align-items:center; gap:8px; }
+.toggle-pill {
+  border: 1px solid rgba(0,0,0,0.08);
+  padding:6px 10px;
+  border-radius:16px;
+  background:transparent;
+  cursor:pointer;
+}
+
+/* form / card */
+.card { padding:12px; border-radius:8px; background:var(--card); box-shadow:none; }
+label { display:block; margin:12px 0; }
+input[type="text"], input[type="password"], textarea, select {
   width: 100%; padding: 8px; margin-top: 6px; box-sizing: border-box;
+  background: transparent; border: 1px solid #e7e7ee; color: var(--text);
 }
 button { background: var(--accent); color: white; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
-button:active { transform: translateY(1px); }
-.hidden { display: none; }
-.small { color: var(--muted); font-size: 0.9rem; }
-.report-card { border: 1px solid #eee; padding: 12px; margin: 8px 0; border-radius: 6px; display:flex; gap:12px; align-items:flex-start;}
+.small-btn { background: var(--accent); color: white; border: none; padding: 6px 8px; border-radius: 6px; cursor: pointer; margin-left:6px; }
+
+/* footer */
+.site-footer { margin-top:18px; max-width:720px; margin-left:auto; margin-right:auto; padding:12px 20px; color:var(--muted); }
+.footer-row { display:flex; justify-content:space-between; align-items:center; }
+.discord-link a { color: var(--accent); text-decoration: none; }
+
+/* report cards used in admin */
+.report-card { border: 1px solid #eee; padding: 12px; margin: 8px 0; border-radius: 6px; display:flex; gap:12px; align-items:flex-start; background:var(--card); }
 .report-card img { max-width: 140px; border-radius:4px; }
 .meta { flex: 1; }
 .meta p { margin: 4px 0; }
+
+/* modal */
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); z-index: 9999; }
+.modal-content { background: var(--card); padding: 18px; border-radius: 10px; width: 90%; max-width: 420px; color:var(--text); }
+.modal .setting-row { margin:10px 0; display:flex; justify-content:space-between; align-items:center; }
+.modal-actions { text-align:right; margin-top:12px; }
+
+/* utility */
+.hidden { display:none; }
+.small { color: var(--muted); font-size: 0.9rem; }
+.form-actions { margin-top: 12px; display:flex; justify-content:flex-end; }
