@@ -22,44 +22,13 @@
     <section id="panel" class="hidden">
       <div class="panel-header">
         <button id="logoutBtn">Logout</button>
-        <!-- Settings knop ook hier -->
-        <button id="settingsBtnAdmin" class="icon-btn" title="Instellingen">⚙️</button>
+        <!-- Instellingen verwijderd om consistent te zijn -->
       </div>
 
       <h2>Rapporten</h2>
       <div id="reports"></div>
     </section>
   </main>
-
-  <!-- Reuse same settings modal markup as index (script will reuse the modal ID if present) -->
-  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-    <div class="modal-content">
-      <h3 id="settingsTitle">Instellingen</h3>
-
-      <section class="setting-row">
-        <label>Theme</label>
-        <div class="theme-controls">
-          <button id="lightModeBtn" class="small-btn">Light</button>
-          <button id="darkModeBtn" class="small-btn">Dark</button>
-        </div>
-      </section>
-
-      <section class="setting-row">
-        <label for="langSelect">Taal</label>
-        <select id="langSelect">
-          <option value="nl">Nederlands</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </section>
-
-      <div class="modal-actions">
-        <button id="closeSettings" class="small-btn">Sluiten</button>
-      </div>
-    </div>
-  </div>
 
   <script src="/script.js"></script>
 </body>
